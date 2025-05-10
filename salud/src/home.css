@@ -108,16 +108,29 @@ body {
   color: #333;
 }
 
-/* Sección de Ubicación */
 .home-location-section {
   display: flex;
-  flex-direction: row; /* Asegura que el mapa esté a la derecha */
+  flex-direction: row; /* Mantener el mapa a la izquierda */
   justify-content: space-around;
   align-items: center;
   gap: 2rem;
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.home-location-map {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 600px;
+}
+
+.home-location-map iframe {
+  width: 100%; /* Adapta el mapa al contenedor */
+  height: 300px;
+  border: 0;
 }
 
 .home-location-text {
@@ -135,17 +148,4 @@ body {
   font-size: 1.2rem;
   line-height: 1.6;
   color: #333;
-}
-
-.home-location-map iframe {
-  width: 100%; /* Adapta el mapa al contenedor */
-  height: 300px;
-  border: 0;
-}
-.home-location-map {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 600px; /* Limita el ancho máximo para evitar que se desborde */
 }

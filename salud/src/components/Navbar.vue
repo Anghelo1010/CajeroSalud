@@ -16,7 +16,8 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 function logout() {
-  localStorage.removeItem("user");
+  localStorage.removeItem("token");  // Ahora elimina el token correcto
   router.push("/login");
 }
+
 </script>
