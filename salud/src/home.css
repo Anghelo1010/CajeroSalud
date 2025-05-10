@@ -1,41 +1,151 @@
-/* styles.css */
-body {
-  font-family: "Arial", sans-serif;
+/* Reinicio de márgenes y padding globales */
+* {
   margin: 0;
   padding: 0;
-  background-color: #f5f5f5;
+  box-sizing: border-box;
 }
 
-header {
-  background-color: #00695c;
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* Estilo del Navbar */
+.home-container {
+  font-family: "Arial", sans-serif;
+}
+
+/* Hero Section */
+.home-hero {
+  position: relative;
+  width: 100vw;
+  height: 90vh; /* Ajustado para que no ocupe toda la pantalla */
+  overflow: hidden;
+}
+
+.home-background-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.home-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
   color: #fff;
-  padding: 1.5rem;
   text-align: center;
 }
 
-header h1 {
-  font-size: 2rem;
+.home-title {
+  font-size: 4rem;
   margin: 0;
+  font-weight: bold;
 }
 
-.introduction {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.home-welcome {
+  font-size: 1.8rem;
+  margin-top: 0.5rem;
 }
 
-.introduction p {
-  font-size: 1.1rem;
+/* Línea divisora */
+.home-divider {
+  margin: 1.5rem auto;
+  width: 80%;
+  height: 3px;
+  background-color: #ffa726;
+  border: none;
+}
+
+/* Sección de información */
+.home-info-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.home-info-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-info-img {
+  max-width: 90%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.home-info-text {
+  flex: 1;
+  text-align: right;
+}
+
+.home-info-title {
+  font-size: 2.5rem;
+  color: #00695c;
+  margin-bottom: 1rem;
+}
+
+.home-info-description {
+  font-size: 1.2rem;
   line-height: 1.6;
-  margin: 0.5rem 0;
+  color: #333;
 }
 
-footer {
-  background-color: #004d40;
-  color: #fff;
-  padding: 1rem;
-  text-align: center;
+/* Sección de Ubicación */
+.home-location-section {
+  display: flex;
+  flex-direction: row; /* Asegura que el mapa esté a la derecha */
+  justify-content: space-around;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.home-location-text {
+  flex: 1;
+  text-align: left;
+}
+
+.home-location-title {
+  font-size: 2rem;
+  color: #00695c;
+  margin-bottom: 0.5rem;
+}
+
+.home-location-description {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.home-location-map iframe {
+  width: 100%; /* Adapta el mapa al contenedor */
+  height: 300px;
+  border: 0;
+}
+.home-location-map {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 600px; /* Limita el ancho máximo para evitar que se desborde */
 }
