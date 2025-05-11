@@ -12,10 +12,13 @@
 import { ref, watch } from 'vue'; // Importamos ref y watch
 import { useRoute } from 'vue-router'; // Importamos onBeforeRouteUpdate
 import Footer from '../src/components/Footer.vue';
-import Navbar from '../src/components/Navbar.vue';
-
 import '../src/components/Navbar.css';
+import Navbar from '../src/components/Navbar.vue';
 import '../src/components/footer.css';
+import '../src/components/login.css';
+import '../src/page/dashboard/dasboard.css';
+import '../src/page/informacion/informacion.css';
+import '../src/page/nosotros/nosotros.css';
 import '../src/style.css';
 
 const route = useRoute();
