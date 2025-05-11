@@ -1,13 +1,16 @@
 <template>
-  <div>
+  <div class="register-container">
     <h2>Registro</h2>
-    <form @submit.prevent="register">
-      <input type="text" v-model="nombre" placeholder="Nombre completo" required />
-      <input type="email" v-model="email" placeholder="Correo" required />
-      <input type="password" v-model="password" placeholder="Contraseña" required />
-      <button type="submit">Registrarse</button>
+    <form @submit.prevent="register" class="register-form">
+      <input type="text" v-model="nombre" placeholder="Nombre completo" required class="input-field" />
+      <input type="email" v-model="email" placeholder="Correo" required class="input-field" />
+      <input type="password" v-model="password" placeholder="Contraseña" required class="input-field" />
+      <button type="submit" class="register-button">Registrarse</button>
     </form>
-    <p>¿Ya tienes cuenta? <router-link to="/login">Inicia sesión</router-link></p>
+    <p class="login-link">
+      ¿Ya tienes cuenta? 
+      <router-link to="/login" class="link">Inicia sesión</router-link>
+    </p>
   </div>
 </template>
 
@@ -42,3 +45,5 @@ async function register() {
   }
 }
 </script>
+
+<style src="./Register.css"></style>
