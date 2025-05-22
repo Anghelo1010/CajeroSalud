@@ -45,8 +45,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from 'vue'
 import Chart from 'chart.js/auto'
+import { nextTick, onMounted, ref } from 'vue'
 import './dasboard.css'
 
 const ipESP = 'http://192.168.1.117:8080/datos'
