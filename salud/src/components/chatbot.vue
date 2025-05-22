@@ -55,10 +55,6 @@ const sendMessage = async () => {
       ],
       max_tokens: 150
     }, {
-    headers: {
-  'Authorization': `Bearer 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`,
-  'Content-Type': 'application/json'
-}
 
     });
 
@@ -100,10 +96,7 @@ const sendMessage = async () => {
         max_tokens: 150
       },
       {
-        headers: {
-          Authorization: `Bearer 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`,
-          'Content-Type': 'application/json'
-        }
+      
       }
     );
 
