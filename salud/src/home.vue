@@ -1,7 +1,6 @@
 <template>
   <div class="home-container">
     <Navbar />
-    
     <!-- Hero Section -->
     <div class="home-hero">
       <img src="../src/assets/images/inicio.jpg" alt="Imagen principal" class="home-background-image" />
@@ -11,6 +10,7 @@
       </div>
     </div>
 
+    <!-- Línea divisora -->
     <hr class="home-divider" />
 
     <!-- Sección de información -->
@@ -27,6 +27,7 @@
       </div>
     </section>
 
+    <!-- Línea divisora -->
     <hr class="home-divider" />
 
     <!-- Sección Cajero de Salud -->
@@ -44,6 +45,7 @@
       </div>
     </section>
 
+    <!-- Línea divisora -->
     <hr class="home-divider" />
 
     <!-- Sección de Parámetros de Salud -->
@@ -71,29 +73,26 @@
       </div>
     </section>
 
+    <!-- Línea divisora -->
     <hr class="home-divider" />
 
-    <!-- Sección Ubicación -->
-    <section class="home-location-section">
-      <div class="home-location-map">
-        <iframe 
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14605.721489356254!2d-63.181684085224606!3d-17.7833815800531!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x93f1e5a92b6ae15d%3A0xd0209d1b1b6b66f1!2sCentro%20de%20Salud%20Santa%20Cruz!5e0!3m2!1ses-419!2sbo!4v1682529612345!5m2!1ses-419!2sbo" 
-          allowfullscreen="" loading="lazy"></iframe>
-      </div>
-      <div class="home-location-text">
-        <h2 class="home-location-title">¿Dónde estamos ubicados?</h2>
-        <p class="home-location-description">
-          Nos encontramos en el Centro de Salud de Santa Cruz, Bolivia, brindando servicios rápidos y efectivos para el monitoreo de la salud.
-        </p>
-      </div>
-    </section>
-
-    <!-- Chatbot flotante -->
-    <Chatbot />
+<!-- Sección Ubicación -->
+<section class="home-location-section">
+  <div class="home-location-map">
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14605.721489356254!2d-63.181684085224606!3d-17.7833815800531!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x93f1e5a92b6ae15d%3A0xd0209d1b1b6b66f1!2sCentro%20de%20Salud%20Santa%20Cruz!5e0!3m2!1ses-419!2sbo!4v1682529612345!5m2!1ses-419!2sbo" 
+      allowfullscreen="" loading="lazy"></iframe>
+  </div>
+  <div class="home-location-text">
+    <h2 class="home-location-title">¿Dónde estamos ubicados?</h2>
+    <p class="home-location-description">
+      Nos encontramos en el Centro de Salud de Santa Cruz, Bolivia, brindando servicios rápidos y efectivos para el monitoreo de la salud.
+    </p>
+  </div>
+</section>
   </div>
 </template>
 
 <script setup>
 import Navbar from '../src/components/Navbar.vue';
-import Chatbot from '../src/components/chatbot.vue';
 </script>

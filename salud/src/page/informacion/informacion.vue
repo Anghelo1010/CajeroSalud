@@ -51,23 +51,6 @@
       </div>
     </div>
     <hr class="info-divider" />
-
-    <!-- Sección: Sensor de Ritmo Cardíaco -->
-<div class="info-content">
-  <div class="info-heart-sensor">
-    <div class="info-heart-text">
-      <h2 class="info-heart-title">Sensor de Ritmo Cardíaco</h2>
-      <p class="info-heart-description">
-        El sensor MAX30102 es un módulo óptico que permite medir la frecuencia cardíaca y niveles de oxígeno en sangre mediante un sistema de emisión y recepción de luz. Funciona por comunicación I2C y está diseñado especialmente para aplicaciones médicas y de fitness.
-      </p>
-    </div>
-    <div class="info-heart-image">
-      <img src="../../assets/images/arterial.jpg" alt="Sensor de Ritmo Cardíaco" class="info-heart-img" />
-    </div>
-  </div>
-</div>
-<hr class="info-divider" />
-
   </div>
 </template>
 

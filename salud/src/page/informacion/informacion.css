@@ -145,39 +145,3 @@
   height: auto;
   border-radius: 8px;
 }
-/* Sección: Sensor de Ritmo Cardíaco */
-.info-heart-sensor {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin: 20px auto;
-  padding: 20px;
-  flex-wrap: wrap;
-}
-
-.info-heart-text {
-  flex: 1;
-  min-width: 300px;
-  margin-right: 20px;
-}
-
-.info-heart-title {
-  font-size: 28px;
-  margin-bottom: 10px;
-}
-
-.info-heart-description {
-  font-size: 18px;
-  line-height: 1.5;
-}
-
-.info-heart-image {
-  flex: 1;
-  min-width: 300px;
-}
-
-.info-heart-img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
