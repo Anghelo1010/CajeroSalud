@@ -1,0 +1,167 @@
+from machine import Pin, I2C
+import network
+import socket
+import time
+import json
+import machine
+
+# --- WiFi ---
+SSID = "Zamorano Link Rompemuros"
+PASSWORD = "1968200120032007"
+
+# --- I2C Configuración ---
+i2c = I2C(0, scl=Pin(19), sda=Pin(18), freq=100000)
+
+# --- Direcciones ---
+ADDR_MAX30102 = 0x57
+ADDR_MLX90614 = 0x5A
+
+# --- Conectar WiFi ---
+def conectar_wifi():
+    wlan = network.WLAN(network.STA_IF)
+    wlan.active(True)
+    if not wlan.isconnected():
+        print("Conectando a WiFi...")
+        wlan.connect(SSID, PASSWORD)
+        timeout = 10
+        while not wlan.isconnected() and timeout > 0:
+            time.sleep(1)
+            timeout -= 1
+    if wlan.isconnected():
+        print("✅ Conectado. IP:", wlan.ifconfig()[0])
+        return True
+    else:
+        print("❌ Error: No se pudo conectar al WiFi.")
+        return False
+
+# --- MAX30102 ---
+def iniciar_max30102():
+    try:
+        i2c.writeto_mem(ADDR_MAX30102, 0x09, b'\x40')  # Reset
+        time.sleep(0.1)
+        i2c.writeto_mem(ADDR_MAX30102, 0x09, b'\x03')  # Modo SpO2
+        i2c.writeto_mem(ADDR_MAX30102, 0x0A, b'\x27')  # Configuración SpO2
+        i2c.writeto_mem(ADDR_MAX30102, 0x0C, b'\x1F')  # LED Rojo
+        i2c.writeto_mem(ADDR_MAX30102, 0x0D, b'\x1F')  # LED IR
+        i2c.writeto_mem(ADDR_MAX30102, 0x08, b'\x00')  # FIFO_WR_PTR
+        i2c.writeto_mem(ADDR_MAX30102, 0x04, b'\x00')  # FIFO_RD_PTR
+        i2c.writeto_mem(ADDR_MAX30102, 0x02, b'\x00')  # FIFO_OVF_COUNTER
+        print("✅ MAX30102 inicializado.")
+    except Exception as e:
+        print("❌ Error al iniciar MAX30102:", e)
+
+def leer_max30102():
+    try:
+        data = i2c.readfrom_mem(ADDR_MAX30102, 0x07, 6)
+        if len(data) != 6:
+            raise ValueError("Datos incompletos")
+        red = ((data[0] << 16) | (data[1] << 8) | data[2]) & 0x3FFFF
+        ir = ((data[3] << 16) | (data[4] << 8) | data[5]) & 0x3FFFF
+        return red, ir
+    except Exception as e:
+        print("❌ Error al leer MAX30102:", e)
+        return 0, 0
+
+def apagar_max30102():
+    i2c.writeto_mem(ADDR_MAX30102, 0x09, b'\x80')
+    print("⛔ MAX30102 apagado")
+
+def encender_max30102():
+    i2c.writeto_mem(ADDR_MAX30102, 0x09, b'\x03')
+    print("▶️ MAX30102 encendido")
+
+def reiniciar_max30102():
+    apagar_max30102()
+    time.sleep(1)
+    encender_max30102()
+    print("🔄 MAX30102 reiniciado")
+
+# --- MLX90614 ---
+def leer_temperatura_mlx90614(registro):
+    try:
+        data = i2c.readfrom_mem(ADDR_MLX90614, registro, 3)
+        raw = data[0] | (data[1] << 8)
+        temp_c = raw * 0.02 - 273.15
+        return round(temp_c, 2)
+    except Exception as e:
+        print(f"❌ Error al leer MLX90614 reg {hex(registro)}:", e)
+        return None
+
+def leer_temperaturas():
+    return leer_temperatura_mlx90614(0x07), leer_temperatura_mlx90614(0x06)
+
+# --- Servidor Web ---
+def iniciar_servidor():
+    try:
+        addr = socket.getaddrinfo('0.0.0.0', 8080)[0][-1]
+        s = socket.socket()
+        s.bind(addr)
+        s.listen(1)
+        print("🌐 Servidor web en puerto 8080...")
+
+        while True:
+            cl, addr = s.accept()
+            request = cl.recv(1024)
+            request_str = str(request)
+
+            if '/datos' in request_str:
+                red, ir = leer_max30102()
+                t_obj, t_amb = leer_temperaturas()
+                response = json.dumps({
+                    'red': red,
+                    'ir': ir,
+                    't_obj': t_obj,
+                    't_amb': t_amb
+                })
+                cl.send('HTTP/1.1 200 OK\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: application/json\r\n\r\n')
+                cl.send(response)
+            else:
+                cl.send('HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n')
+                html = f"""
+                <html>
+                <head>
+                    <title>Sensores ESP32</title>
+                    <script>
+                        function actualizar() {{
+                            fetch('/datos').then(r => r.json()).then(data => {{
+                                document.getElementById('red').textContent = "RED: " + data.red;
+                                document.getElementById('ir').textContent = "IR: " + data.ir;
+                                document.getElementById('tobj').textContent = "Temp Objeto: " + data.t_obj + " °C";
+                                document.getElementById('tamb').textContent = "Temp Ambiente: " + data.t_amb + " °C";
+                            }});
+                        }}
+                        setInterval(actualizar, 1000);
+                    </script>
+                </head>
+                <body>
+                    <h1>Lecturas del Sensor</h1>
+                    <p id="red">RED: ---</p>
+                    <p id="ir">IR: ---</p>
+                    <p id="tobj">Temp Objeto: ---</p>
+                    <p id="tamb">Temp Ambiente: ---</p>
+                    <form action="/stop" method="get"><button type="submit">Apagar Sensor</button></form>
+                    <form action="/start" method="get"><button type="submit">Encender Sensor</button></form>
+                    <form action="/restart" method="get"><button type="submit">Reiniciar Sensor</button></form>
+                </body>
+                </html>
+                """
+                cl.send(html)
+
+            # Comandos desde botones
+            if '/stop' in request_str:
+                apagar_max30102()
+            elif '/start' in request_str:
+                encender_max30102()
+            elif '/restart' in request_str:
+                reiniciar_max30102()
+
+            cl.close()
+
+    except Exception as e:
+        print("❌ Error en servidor:", e)
+        machine.reset()
+
+# --- MAIN ---
+if conectar_wifi():
+    iniciar_max30102()
+    iniciar_servidor()
