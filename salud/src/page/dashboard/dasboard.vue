@@ -49,7 +49,7 @@ import Chart from 'chart.js/auto'
 import { nextTick, onMounted, ref } from 'vue'
 import './dasboard.css'
 
-const ipESP = 'http://192.168.1.117:8080/datos'
+const ipESP = 'http://192.168.32.142:8080/datos'
 
 const ir = ref(0)
 const red = ref(0)
@@ -90,9 +90,9 @@ async function obtenerDatos() {
       errorConexion.value = false
 
       // Clasificación del estado
-      if (ir.value > 120000 && red.value > 150000) {
+      if (ir.value > 10000 && red.value > 10000) {
         estado.value = 'alerta'
-      } else if (ir.value > 100000 && red.value > 100000) {
+      } else if (ir.value > 1000 && red.value > 1000) {
         estado.value = 'normal'
       } else {
         estado.value = ''
